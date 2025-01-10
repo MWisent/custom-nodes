@@ -1,29 +1,34 @@
 FROM n8nio/n8n:latest
 
-# Kopiowanie plików projektu
+# Kopiuj wszystkie pliki do kontenera
 COPY . /custom-nodes/
 
-# Instalacja zależności
+USER root
+RUN chown -R node:node /custom-nodes/
+
+USER node
 WORKDIR /custom-nodes
+
+# Instalacja zależności
 RUN npm install
 
-# Kopiowanie custom nodes do odpowiedniego katalogu n8n
-RUN mkdir -p /root/.n8n/custom
-RUN cp -r /custom-nodes/CustomGetPriceData.js /root/.n8n/custom/
-RUN cp -r /custom-nodes/CustomGetNewsData.js /root/.n8n/custom/
-RUN cp -r /custom-nodes/CustomKAGSystem.js /root/.n8n/custom/
-RUN cp -r /custom-nodes/CustomSignalGenerator.js /root/.n8n/custom/
-RUN cp -r /custom-nodes/CustomRiskManager.js /root/.n8n/custom/
-RUN cp -r /custom-nodes/CustomTradeHandler.js /root/.n8n/custom/
-RUN cp -r /custom-nodes/CustomNotifications.js /root/.n8n/custom/
+# Tworzenie katalogu na custom nodes
+RUN mkdir -p /home/node/.n8n/custom
 
-# Kopiowanie testów (opcjonalnie)
-RUN cp -r /custom-nodes/CustomTradeHandler.test.js /root/.n8n/custom/
-RUN cp -r /custom-nodes/CustomNotifications.test.js /root/.n8n/custom/
+# Kopiowanie plików z odpowiednich lokalizacji
+RUN cp -r /custom-nodes/CustomGetPriceData.js /home/node/.n8n/custom/
+RUN cp -r /custom-nodes/CustomGetNewsData.js /home/node/.n8n/custom/
+RUN cp -r /custom-nodes/CustomNotifications.js /home/node/.n8n/custom/
+RUN cp -r /custom-nodes/CustomRiskManager.js /home/node/.n8n/custom/
+RUN cp -r /custom-nodes/CustomSentimentAnalysis.js /home/node/.n8n/custom/
+RUN cp -r /custom-nodes/CustomSignalGenerator.js /home/node/.n8n/custom/
+RUN cp -r /custom-nodes/CustomTechnicalIndicators.js /home/node/.n8n/custom/
+RUN cp -r /custom-nodes/CustomTradeHandler.js /home/node/.n8n/custom/
+RUN cp -r /custom-nodes/src/CustomKAGSystem.js /home/node/.n8n/custom/
 
 # Zmienne środowiskowe dla n8n
 ENV N8N_PORT=${N8N_PORT}
-ENV N8N_CUSTOM_EXTENSIONS=${N8N_CUSTOM_EXTENSIONS}
+ENV N8N_CUSTOM_EXTENSIONS=/home/node/.n8n/custom
 ENV N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
 
 # Zmienne środowiskowe dla brokera

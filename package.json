@@ -5,9 +5,14 @@
     "railway:start": "n8n start"
   },
   "dependencies": {
+    "@hapi/boom": "^9.1.4",
+    "@hapi/cryptiles": "^5.1.0",
+    "@hapi/hawk": "^8.0.0",
+    "@hapi/hoek": "^9.3.0",
+    "@hapi/sntp": "^4.0.0",
     "axios": "^0.21.1",
-    "coinbase": "^2.0.8",
-    "n8n-core": "^0.x.x"
+    "n8n-core": "^0.x.x",
+    "uuid": "^8.3.2"
   },
   "engines": {
     "node": ">=16.0.0"
