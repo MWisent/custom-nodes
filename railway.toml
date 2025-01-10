@@ -6,7 +6,7 @@ dockerfilePath = "Dockerfile"
 startCommand = "npm run railway:start"
 healthcheckPath = "/healthz"
 healthcheckTimeout = 300
-restartPolicyType = "on-failure"
+restartPolicyType = "always"
 restartPolicyMaxRetries = 3
 
 [env]
