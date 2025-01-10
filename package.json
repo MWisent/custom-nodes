@@ -1,5 +1,15 @@
 {
+  "scripts": {
+    "start": "n8n start",
+    "build": "n8n build",
+    "railway:start": "n8n start"
+  },
   "dependencies": {
-    "rss-parser": "^3.13.0"
+    "axios": "^0.21.1",
+    "coinbase": "^2.0.8",
+    "n8n-core": "^0.x.x"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }

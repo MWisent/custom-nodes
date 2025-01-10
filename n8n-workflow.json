@@ -1,0 +1,180 @@
+{
+    "name": "KAG Trading System",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "value": 1
+                        }
+                    ]
+                }
+            },
+            "name": "Schedule Trigger",
+            "type": "n8n-nodes-base.cron",
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "symbol": "BTCUSDT",
+                "interval": "1h"
+            },
+            "name": "Price Data",
+            "type": "custom.getPriceData",
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "sources": ["crypto", "financial", "social"]
+            },
+            "name": "News Data",
+            "type": "custom.getNewsData",
+            "position": [
+                450,
+                450
+            ]
+        },
+        {
+            "parameters": {},
+            "name": "KAG Analysis",
+            "type": "custom.kagSystem",
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {},
+            "name": "Signal Generator",
+            "type": "custom.signalGenerator",
+            "position": [
+                850,
+                300
+            ]
+        },
+        {
+            "parameters": {},
+            "name": "Risk Manager",
+            "type": "custom.riskManager",
+            "position": [
+                1050,
+                300
+            ]
+        },
+        {
+            "parameters": {},
+            "name": "Trade Handler",
+            "type": "custom.tradeHandler",
+            "position": [
+                1250,
+                300
+            ]
+        },
+        {
+            "parameters": {},
+            "name": "Notifications",
+            "type": "custom.notifications",
+            "position": [
+                1450,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Schedule Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Price Data",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "News Data",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Price Data": {
+            "main": [
+                [
+                    {
+                        "node": "KAG Analysis",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "News Data": {
+            "main": [
+                [
+                    {
+                        "node": "KAG Analysis",
+                        "type": "main",
+                        "index": 1
+                    }
+                ]
+            ]
+        },
+        "KAG Analysis": {
+            "main": [
+                [
+                    {
+                        "node": "Signal Generator",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Signal Generator": {
+            "main": [
+                [
+                    {
+                        "node": "Risk Manager",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Risk Manager": {
+            "main": [
+                [
+                    {
+                        "node": "Trade Handler",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Trade Handler": {
+            "main": [
+                [
+                    {
+                        "node": "Notifications",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": true,
+    "settings": {
+        "saveExecutionProgress": true,
+        "saveManualExecutions": true
+    }
+} 
